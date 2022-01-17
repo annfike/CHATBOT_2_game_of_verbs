@@ -3,15 +3,39 @@ from dotenv import load_dotenv
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 import logging
+from google.cloud import dialogflow
+
+
+def detect_intent_texts(project_id, session_id, text, language_code): 
+    session_client = dialogflow.SessionsClient()
+    session = session_client.session_path(project_id, session_id)
+    print("Session path: {}\n".format(session))
+
+    text_input = dialogflow.TextInput(text=text, language_code=language_code)
+
+    query_input = dialogflow.QueryInput(text=text_input)
+
+    response = session_client.detect_intent(
+        request={"session": session, "query_input": query_input}
+    )
+
+    print("=" * 20)
+    print("Query text: {}".format(response.query_result.query_text))
+    print(
+        "Detected intent: {} (confidence: {})\n".format(
+            response.query_result.intent.display_name,
+            response.query_result.intent_detection_confidence,
+        )
+    )
+    print("Fulfillment text: {}\n".format(response.query_result.fulfillment_text))
+    return response.query_result.fulfillment_text
 
 
 logger = logging.getLogger(__file__)
-
 # Enable logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
-
 logger = logging.getLogger(__name__)
 
 
@@ -30,17 +54,16 @@ def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
     update.message.reply_text('Help!')
 
-#detect_intent_texts('annfike-nthn', '110968809', 'Пар', 'ru-RU')
-def echo(update: Update, context: CallbackContext) -> None:
-    """Echo the user message."""
-    update.message.reply_text(update.message.text)
-    
 
+def echo(update: Update, context: CallbackContext) -> None:
+    text = detect_intent_texts('annfike-nthn', 110968809, update.message.text, 'ru-RU')
+    update.message.reply_text(text)
+    
 
 def main() -> None:
     load_dotenv()
     tg_token = os.getenv('TG_BOT_TOKEN')
-    
+    os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
