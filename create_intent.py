@@ -31,32 +31,6 @@ def create_intent(project_id, display_name, training_phrases_parts, message_text
 
     print("Intent created: {}".format(response))
 
-# topics = {
-#     "Устройство на работу": {
-#         "questions": [
-#             "Как устроиться к вам на работу?",
-#             "Как устроиться к вам?",
-#             "Хочу работать редактором у вас"
-#         ],
-#         "answer": "Если вы хотите устроиться к нам, напишите на почту game-of-verbs@gmail.com мини-эссе о себе и прикрепите ваше портфолио."
-#     },
-#     "Забыл пароль": {
-#         "questions": [
-#             "Не помню пароль",
-#             "Не могу войти",
-#             "Не могу войти в аккаунт"
-#         ],
-#         "answer": "Если вы не можете войти на сайт, воспользуйтесь кнопкой «Забыли пароль?» под формой входа. Вам на почту прийдёт письмо с дальнейшими инструкциями. Проверьте папку «Спам», иногда письма попадают в неё."
-#     }
-# }
-
-# for topic, questions_answer in topics.items():
-#     print(topic)
-#     print(questions_answer["questions"])
-#     print(questions_answer["answer"])
-#     questions = questions_answer["questions"]
-#     answer = [(questions_answer["answer"])]
-#     create_intent('annfike-nthn', topic, questions, answer)
 
 with open("phrases.json", "r", encoding='utf-8') as file:
     topics = json.load(file)
