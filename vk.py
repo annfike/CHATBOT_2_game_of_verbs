@@ -9,9 +9,7 @@ from detect_intent import detect_intent_texts
 
 def vk_bot_answer(event, vk_api):
     intent = detect_intent_texts('annfike-nthn', event.user_id, event.text, 'ru-RU')
-    if intent.query_result.intent.is_fallback:
-        pass
-    else:
+    if not intent.query_result.intent.is_fallback:
         text = intent.query_result.fulfillment_text
         vk_api.messages.send(
             user_id=event.user_id,
