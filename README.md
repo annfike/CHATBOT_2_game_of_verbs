@@ -2,6 +2,11 @@
 
 Сервис для технической поддержки в чат-ботах в Телеграм и в группе Вконтакте на основе сервиса [DialogFlow](https://dialogflow.cloud.google.com).
 
+Чат бот в Телеграм, [пример](https://t.me/annfikeBot).
+![Чат бот в Телеграм](https://github.com/annfike/CHATBOT_2_game_of_verbs/blob/main/tg.gif)
+Чат бот Вконтакте, [пример](https://vk.com/gim209206220?sel=95751465). 
+![Чат бот Вконтакте](https://github.com/annfike/CHATBOT_2_game_of_verbs/blob/main/vk.gif)
+
 ## Как установить
 ### 1. Скрипт для обучения DialogFlow
 
