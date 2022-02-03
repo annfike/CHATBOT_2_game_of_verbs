@@ -20,19 +20,24 @@ def create_intent(project_id, display_name, training_phrases_parts, message_text
     intent = dialogflow.Intent(
         display_name=display_name, training_phrases=training_phrases, messages=[message]
     )
-    response = intents_client.create_intent(
+    intents_client.create_intent(
         request={'parent': parent, 'intent': intent}
     )
-    print("Intent created: {}".format(response))
 
 
-with open('phrases.json', 'r', encoding='utf-8') as file:
-    topics = json.load(file)
+def main() -> None:
+    with open('phrases.json', 'r', encoding='utf-8') as file:
+        topics = json.load(file)
 
-load_dotenv()
-project_id = os.getenv('PROJECT_ID')
-os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
-for topic, questions_answer in topics.items():
-    questions = questions_answer['questions']
-    answer = [(questions_answer['answer'])]
-    create_intent(project_id, topic, questions, answer)
+    load_dotenv()
+    project_id = os.getenv('PROJECT_ID')
+    os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+
+    for topic, questions_answer in topics.items():
+        questions = questions_answer['questions']
+        answer = [(questions_answer['answer'])]
+        create_intent(project_id, topic, questions, answer)
+
+
+if __name__ == '__main__':
+    main()
